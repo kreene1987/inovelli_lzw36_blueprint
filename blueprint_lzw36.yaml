@@ -121,6 +121,8 @@ action:
 - variables:
     button_id: '{{ trigger.event.data.property_key_name }}'
     press_count: '{{ trigger.event.data.value }}'
+    zwavejs_device: !input 'inovelli_fan_switch'
+    zwavejs_device_name: '{{ device_attr('zwavejs_device', 'name') }}'
 - service: logbook.log
   data:
     name: Button Id
@@ -133,6 +135,10 @@ action:
   data:
     name: Device
     message: '{{ zwavejs_device }}'
+- service: logbook.log
+  data:
+    name: Device Name
+    message: '{{ zwavejs_device_name }}'
 - choose:
   - conditions: '{{ button_id == "002" and press_count == "KeyPressed" }}'
     sequence: !input 'button_a'
